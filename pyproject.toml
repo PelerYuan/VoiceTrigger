@@ -13,6 +13,8 @@ dependencies = [
     "ctranslate2==4.4.0",
     "numpy==1.26.4",
     "sounddevice==0.5.1",
+    "huggingface-hub>=0.28.1,<1",
+    "requests>=2.32.5,<3",
     "tomli==2.2.1; python_version < '3.11'",
 ]
 

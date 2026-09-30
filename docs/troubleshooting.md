@@ -30,6 +30,10 @@
 
 Ubuntu 基础镜像自带的旧 pip 可能在解析复杂依赖图时崩溃。Dockerfile 先安装固定的 pip 25.2 再安装项目，不要删除此步骤或用宿主机 pip 版本代替容器内的检查。
 
+## 导入 faster-whisper 时缺少 requests
+
+固定的 faster-whisper 1.1.1 直接使用 requests，但其元数据没有显式声明该依赖。项目显式安装 requests，并限制 Hugging Face Hub 为兼容的 0.x 系列；不要只安装 faster-whisper 后省略项目的其他依赖。
+
 ## JSONL 占满磁盘
 
 当前不自动轮转 JSONL。使用外部 logrotate 或定期清理并重启服务重新打开文件；普通文件重命名后进程仍可能写到原句柄。Docker stdout 日志轮转和 JSONL 文件轮转是两回事。
