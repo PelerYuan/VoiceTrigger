@@ -1,0 +1,32 @@
+services:
+  voice-trigger:
+    build: .
+    image: voice-trigger:p4
+    init: true
+    restart: unless-stopped
+    environment:
+      VOICE_INPUT_KIND: rtsp
+      VOICE_INPUT_URL: ${CAMERA_RTSP_URL:?Set CAMERA_RTSP_URL in .env}
+      VOICE_MODEL: ${VOICE_MODEL:-small}
+      VOICE_DEVICE: cuda
+      VOICE_COMPUTE_TYPE: int8_float32
+    volumes:
+      - ./config.local.toml:/app/config.toml:ro
+      - model-cache:/models
+      - trigger-events:/events
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  model-cache:
+  trigger-events:

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voice-trigger"
+version = "0.1.0"
+description = "Continuous local speech recognition and configurable keyword detection"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "faster-whisper==1.1.1",
+    "ctranslate2==4.4.0",
+    "numpy==1.26.4",
+    "sounddevice==0.5.1",
+    "tomli==2.2.1; python_version < '3.11'",
+]
+
+[project.optional-dependencies]
+docs = ["mkdocs[i18n]==1.6.1"]
+
+[project.scripts]
+voice-trigger = "voice_trigger.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: Core / ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.11', '3.12']
+    env:
+      PYTHONPATH: src
+      PYTHONUTF8: '1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install build and compatibility dependencies
+        run: python -m pip install build==1.2.2.post1 tomli==2.2.1
+      - name: Unit and simulated pipeline tests
+        run: python -m unittest discover -s tests -v
+      - name: Documentation link checks
+        run: python scripts/check_docs.py
+      - name: Syntax checks
+        run: python -m compileall -q src tests scripts
+      - name: Build Python distributions
+        run: python -m build
+
+  container:
+    name: Container build and CPU import smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Validate Compose example
+        env:
+          CAMERA_RTSP_URL: rtsp://example.invalid/stream
+        run: |
+          cp config.example.toml config.local.toml
+          docker compose config --quiet
+      - name: Build Linux amd64 image
+        run: docker build --platform linux/amd64 -t voice-trigger:ci .
+      - name: Check installed inference dependencies without a GPU or model download
+        run: >-
+          docker run --rm --entrypoint python voice-trigger:ci -c
+          "import ctranslate2; from faster_whisper import WhisperModel;
+          from voice_trigger.config import load_config;
+          assert 'int8' in ctranslate2.get_supported_compute_types('cpu');
+          load_config('/app/config.toml'); print('Container import smoke test passed')"

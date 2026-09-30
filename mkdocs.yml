@@ -1,0 +1,23 @@
+site_name: VoiceTrigger
+site_description: 本地语音触发词监听与 Tesla P4 部署指南
+docs_dir: docs
+site_dir: site
+theme:
+  name: mkdocs
+  locale: zh_CN
+nav:
+  - 项目概览: index.md
+  - 快速开始: getting-started.md
+  - P4 部署: deployment.md
+  - 配置参考: configuration.md
+  - 架构与边界: architecture.md
+  - 事件格式: events.md
+  - 故障排查: troubleshooting.md
+  - 验收与维护: operations.md
+plugins:
+  - search:
+      lang:
+        - en
+markdown_extensions:
+  - tables
+  - fenced_code

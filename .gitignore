@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.env
+config.local.toml
+events/
+models/
+*.wav
+*.mp3
+*.mp4
+*.tar
+site/

@@ -1,0 +1,15 @@
+include README.md CONTRIBUTING.md SECURITY.md CHANGELOG.md
+include Dockerfile compose.yaml mkdocs.yml config.example.toml
+include .dockerignore .gitignore .env.example
+recursive-include docs *.md
+recursive-include schemas *.json
+recursive-include scripts *.py *.ps1
+recursive-include .github *.yml *.md
+exclude .env config.local.toml
+global-exclude __pycache__ *.py[cod]
+prune build
+prune dist
+prune site
+prune .venv
+prune models
+prune events

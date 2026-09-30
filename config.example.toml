@@ -1,0 +1,38 @@
+[input]
+kind = "microphone"
+device = ""
+url = ""
+ffmpeg = "ffmpeg"
+input_args = []
+reconnect_seconds = 3.0
+
+[recognition]
+model = "small"
+device = "cpu"
+compute_type = "int8"
+language = "zh"
+download_root = "models"
+beam_size = 1
+cpu_threads = 4
+initial_prompt = ""
+min_log_probability = -1.0
+max_no_speech_probability = 0.6
+
+[audio]
+sample_rate = 16000
+frame_seconds = 0.1
+rms_threshold = 0.012
+pre_roll_seconds = 0.3
+silence_seconds = 0.7
+min_speech_seconds = 0.2
+max_segment_seconds = 8.0
+overlap_seconds = 0.5
+queue_size = 6
+
+[detection]
+keywords = ["张三", "小张"]
+cooldown_seconds = 10.0
+
+[output]
+events_file = "events/triggers.jsonl"
+log_transcripts = false
