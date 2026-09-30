@@ -1,4 +1,8 @@
 site_name: VoiceTrigger
+site_url: https://page.peler.top/VoiceTrigger/
+repo_url: https://github.com/PelerYuan/VoiceTrigger
+repo_name: PelerYuan/VoiceTrigger
+edit_uri: edit/main/docs/
 site_description: 本地语音触发词监听与 Tesla P4 部署指南
 docs_dir: docs
 site_dir: site

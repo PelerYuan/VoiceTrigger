@@ -1,5 +1,10 @@
 # VoiceTrigger
 
+[![CI](https://github.com/PelerYuan/VoiceTrigger/actions/workflows/ci.yml/badge.svg)](https://github.com/PelerYuan/VoiceTrigger/actions/workflows/ci.yml)
+[![Documentation](https://github.com/PelerYuan/VoiceTrigger/actions/workflows/docs.yml/badge.svg)](https://github.com/PelerYuan/VoiceTrigger/actions/workflows/docs.yml)
+
+[在线文档](https://page.peler.top/VoiceTrigger/) · [配置参考](docs/configuration.md) · [P4 部署](docs/deployment.md)
+
 本地持续语音监听与自定义触发词检测，面向 **Linux + Tesla P4** 部署，支持 Windows CPU 开发。命中名字、昵称或短语后输出结构化 JSON 事件，不需要把音频上传到云端。
 
 **状态：早期版本。** 当前没有桌面通知和网络事件 API。真实摄像头、P4 推理及准确率仍需现场验收；完善文档和 CI 不等于已经达到生产可靠性。
@@ -42,7 +47,7 @@ RTSP / 文件输入需要 FFmpeg；容器已安装。日志调试可能暴露转
 | [故障排查](docs/troubleshooting.md) | GPU、音频、误报、积压与日志 |
 | [验收与维护](docs/operations.md) | 实测清单、升级和回滚 |
 
-文档站配置为 MkDocs；GitHub Pages 工作流已提供，实际发布需要仓库管理员启用 Pages 和 `PUBLISH_DOCS` 变量。
+文档站使用 MkDocs 和 GitHub Pages，随 `main` 更新构建发布。复制到其他仓库时，需要管理员启用 Pages、设置 `PUBLISH_DOCS=true`，并调整 `mkdocs.yml` 的站点和仓库地址。
 
 ## 开发与验证
 

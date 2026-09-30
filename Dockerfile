@@ -18,7 +18,8 @@ ENV PATH="/opt/venv/bin:${PATH}"
 WORKDIR /app
 COPY pyproject.toml README.md ./
 COPY src ./src
-RUN pip install --no-cache-dir .
+RUN python -m pip install --no-cache-dir "pip==25.2" \
+    && python -m pip install --no-cache-dir .
 COPY config.example.toml ./config.toml
 RUN useradd --uid 10001 --create-home listener \
     && mkdir /models /events \

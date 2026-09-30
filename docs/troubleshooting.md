@@ -26,6 +26,10 @@
 
 检查服务器能否访问模型源及 `/models` 权限。可准备已转换的 CTranslate2 模型目录并挂载，再将 `recognition.model` 设置为容器内路径。不要把模型缓存提交到仓库。
 
+## Docker 安装依赖时报 pip AssertionError
+
+Ubuntu 基础镜像自带的旧 pip 可能在解析复杂依赖图时崩溃。Dockerfile 先安装固定的 pip 25.2 再安装项目，不要删除此步骤或用宿主机 pip 版本代替容器内的检查。
+
 ## JSONL 占满磁盘
 
 当前不自动轮转 JSONL。使用外部 logrotate 或定期清理并重启服务重新打开文件；普通文件重命名后进程仍可能写到原句柄。Docker stdout 日志轮转和 JSONL 文件轮转是两回事。
